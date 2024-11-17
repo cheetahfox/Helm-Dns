@@ -1,0 +1,377 @@
+# Default values for dns-cheetahfox.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: dns-cheetahfox
+
+replicaCount: 3
+
+image:
+  image: internetsystemsconsortium/bind9
+  pullPolicy: IfNotPresent
+  tag: 9.19
+
+imageConfig:
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  port: 53
+  targetPort: 53
+  labels:
+
+readinessProbe:
+  enabled: true
+livenessProbe:
+  enabled: true
+
+bindzones:
+  db.cheetahfox-internal: |  
+      $ORIGIN .
+      $TTL 86400      ; 1 day
+      cheetahfox.com          IN SOA  ns1.cheetahfox.com. root.cheetahfox.com. (
+                                      2024092405 ; serial
+                                      3000       ; refresh (50 minutes)
+                                      7200       ; retry (2 hours)
+                                      1209600    ; expire (2 weeks)
+                                      10400      ; minimum (2 hours 53 minutes 20 seconds)
+                                      )
+                              NS      ns1.cheetahfox.com.
+                              NS      ns2.cheetahfox.com.
+                              A       198.58.105.218
+                              MX      10 mail.cheetahfox.com.
+                              AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+      $ORIGIN cheetahfox.com.
+      cheetahfox.com.        600 IN TXT "v=spf1 mx a:mail.cheetahfox.com ~all"
+      _dmarc.cheetahfox.com. 600 IN TXT "v=DMARC1; p=reject; rua=mailto:admin@mail.cheetahfox.com; ruf=mailto:admin@mail.cheetahfox.com; adkim=s; aspf=s"
+      _DMARC                 600 IN TXT "v=DMARC1; p=reject; rua=mailto:admin@mail.cheetahfox.com; ruf=mailto:admin@mail.cheetahfox.com; adkim=s; aspf=s"
+      cheetahfox.com._report._dmarc.mail.cheetahfox.com. 600 IN TXT "v=DMARC1;"
+      _25._tcp.mail.cheetahfox.com. 86400 IN TLSA 2 1 1 0b9fa5a59eed715c26c1020c711b4f6ec42d58b0015e14337a39dad301c5afc3
+      _25._tcp.mail.cheetahfox.com. 86400 IN TLSA 2 1 1 762195c225586ee6c0237456e2107dc54f1efc21f61a792ebd515913cce68332
+      _imap._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+      _pop3._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+      _submission._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+      _autodiscover._tcp.cheetahfox.com. 600 IN SRV 10 1 443 mail.cheetahfox.com.
+      _submissions._tcp.cheetahfox.com. 600 IN SRV 10 1 465 mail.cheetahfox.com.
+      _imaps._tcp.cheetahfox.com. 600 IN SRV 10 1 993 mail.cheetahfox.com.
+      _pop3s._tcp.cheetahfox.com. 600 IN SRV 10 1 995 mail.cheetahfox.com.
+      autoconfig.cheetahfox.com. 600 IN CNAME mail.cheetahfox.com.
+      autodiscover.cheetahfox.com. 600 IN CNAME mail.cheetahfox.com.
+      mouse                   A       192.168.77.1
+      akui                    A       104.200.18.251
+      atlas                   A       192.168.66.69
+      argo                    A       192.168.30.5
+      cheetah                 A       192.168.77.40
+      electra                 A       192.168.66.71
+      hue                     A       192.168.77.20
+      MacBook-Pro-2           A       192.168.77.35
+      warg                    A       192.168.77.41
+      m6me-ipmi               A       192.168.77.49
+      m6me                    A       192.168.77.50
+      kitsune                 A       192.168.77.100
+      win-7vm                 A       192.168.77.150
+      nezoria                 A       192.168.79.11
+      dashboard               A       192.168.30.4
+      grafana                 A       192.168.30.0
+      ipmi-api                A       192.168.30.14
+      ipmi-atlas              A       192.168.75.20
+      ipmi-taygeta            A       192.168.75.21
+      ipmi-merope             A       192.168.75.22
+      ipmi-electra            A       192.168.75.23
+      influxd                 A       192.168.30.1
+      influxdbv1              A       192.168.30.2
+      ingress-demo            A       192.168.30.14
+      hecate                  A       35.208.63.93
+      homeassistant           A       192.168.77.163
+      jellyfin                A       192.168.30.16
+      kiri                    A       205.159.243.25
+      loki                    A       192.168.30.17
+      mail                    A       104.200.18.251
+      mail                    AAAA    2600:3c00::f03c:95ff:fe5d:1f5c
+      merope                  A       192.168.66.70
+      mqtt                    A       192.168.30.9
+      mizugomu                A       192.168.75.3
+      netbox                  A       192.168.30.10
+      ns1                     A       198.58.105.218
+      ns1                     AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+      ns2                     A       35.208.63.93
+      obake                   A       198.58.105.218
+      obake                   AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+      packetflow              A       198.58.105.218
+      pbx                     A       192.168.79.11
+      pi-rtr                  A       192.168.77.131
+      pleiades-api            A       192.168.66.100
+      pleiades-grafana        A       192.168.67.100
+      pleiades-loki           A       192.168.67.110
+      prometheus              A       192.168.30.11
+      pop                     A       198.58.105.218
+      redmine                 A       192.168.30.8
+      s3                      A       192.168.77.50
+      s3-pleiades             A       192.168.66.70
+      s3-pleiades             A       192.168.66.71
+      s3-pleiades             A       192.168.66.72
+      speedtest               A       192.168.30.14
+      ruler.s3                A       192.168.77.50
+      chunks.s3               A       192.168.77.50
+      software-dev            A       192.168.79.13
+      stock-ms                A       192.168.30.14
+      taygeta                 A       192.168.66.72
+      thanos-query-frontend   A       192.168.67.106
+      thanos-receive          A       192.168.67.107
+      vps                     A       198.58.105.218
+      www                     A       198.58.105.218
+      notflix                 A       173.174.137.32
+      wp-test                 A       192.168.79.15
+      fap                     A       192.168.21.22
+      map                     A       192.168.21.23
+      gap                     A       192.168.21.25
+      kubeworker-1            A       192.168.79.38
+      kubeworker-2            A       192.168.79.30
+      kubeworker-3            A       192.168.79.21
+      kube-master-1           A       192.168.79.25
+      kube-master-2           A       192.168.79.42
+      kube-master-3           A       192.168.79.19
+      k8s-install             A       192.168.79.18
+      m6me-openstack-vip      A       192.168.77.50
+      www.m6me                CNAME   m6me-openstack-vip
+      keystone.m6me           CNAME   m6me-openstack-vip
+      glance.m6me             CNAME   m6me-openstack-vip
+      neutron.m6me            CNAME   m6me-openstack-vip
+      nova.m6me               CNAME   m6me-openstack-vip
+      metadata.m6me           CNAME   m6me-openstack-vip
+      cinder.m6me             CNAME   m6me-openstack-vip
+      heat.m6me               CNAME   m6me-openstack-vip
+      octavia.m6me            CNAME   m6me-openstack-vip
+      barbican.m6me           CNAME   m6me-openstack-vip
+      nova-novncproxy.m6me    CNAME   m6me-openstack-vip
+      ceilometer.m6me         CNAME   m6me-openstack-vip
+      grafana.m6me            CNAME   m6me-openstack-vip
+      nagios.m6me             CNAME   m6me-openstack-vip
+
+  named.ca: |
+      ;       This file holds the information on root name servers needed to 
+      ;       initialize cache of Internet domain name servers
+      ;       (e.g. reference this file in the "cache  .  <file>"
+      ;       configuration file of BIND domain name servers). 
+      ; 
+      ;       This file is made available by InterNIC 
+      ;       under anonymous FTP as
+      ;           file                /domain/named.cache 
+      ;           on server           FTP.INTERNIC.NET
+      ;       -OR-                    RS.INTERNIC.NET
+      ;
+      ;       last update:     July 21, 2022
+      ;       related version of root zone:     2022072103
+      ; 
+      ; FORMERLY NS.INTERNIC.NET 
+      ;
+      .                        3600000      NS    A.ROOT-SERVERS.NET.
+      A.ROOT-SERVERS.NET.      3600000      A     198.41.0.4
+      A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:ba3e::2:30
+      ; 
+      ; FORMERLY NS1.ISI.EDU 
+      ;
+      .                        3600000      NS    B.ROOT-SERVERS.NET.
+      B.ROOT-SERVERS.NET.      3600000      A     199.9.14.201
+      B.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:200::b
+      ; 
+      ; FORMERLY C.PSI.NET 
+      ;
+      .                        3600000      NS    C.ROOT-SERVERS.NET.
+      C.ROOT-SERVERS.NET.      3600000      A     192.33.4.12
+      C.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2::c
+      ; 
+      ; FORMERLY TERP.UMD.EDU 
+      ;
+      .                        3600000      NS    D.ROOT-SERVERS.NET.
+      D.ROOT-SERVERS.NET.      3600000      A     199.7.91.13
+      D.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2d::d
+      ; 
+      ; FORMERLY NS.NASA.GOV
+      ;
+      .                        3600000      NS    E.ROOT-SERVERS.NET.
+      E.ROOT-SERVERS.NET.      3600000      A     192.203.230.10
+      E.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:a8::e
+      ; 
+      ; FORMERLY NS.ISC.ORG
+      ;
+      .                        3600000      NS    F.ROOT-SERVERS.NET.
+      F.ROOT-SERVERS.NET.      3600000      A     192.5.5.241
+      F.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:2f::f
+      ; 
+      ; FORMERLY NS.NIC.DDN.MIL
+      ;
+      .                        3600000      NS    G.ROOT-SERVERS.NET.
+      G.ROOT-SERVERS.NET.      3600000      A     192.112.36.4
+      G.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:12::d0d
+      ; 
+      ; FORMERLY AOS.ARL.ARMY.MIL
+      ;
+      .                        3600000      NS    H.ROOT-SERVERS.NET.
+      H.ROOT-SERVERS.NET.      3600000      A     198.97.190.53
+      H.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:1::53
+      ; 
+      ; FORMERLY NIC.NORDU.NET
+      ;
+      .                        3600000      NS    I.ROOT-SERVERS.NET.
+      I.ROOT-SERVERS.NET.      3600000      A     192.36.148.17
+      I.ROOT-SERVERS.NET.      3600000      AAAA  2001:7fe::53
+      ; 
+      ; OPERATED BY VERISIGN, INC.
+      ;
+      .                        3600000      NS    J.ROOT-SERVERS.NET.
+      J.ROOT-SERVERS.NET.      3600000      A     192.58.128.30
+      J.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:c27::2:30
+      ; 
+      ; OPERATED BY RIPE NCC
+      ;
+      .                        3600000      NS    K.ROOT-SERVERS.NET.
+      K.ROOT-SERVERS.NET.      3600000      A     193.0.14.129
+      K.ROOT-SERVERS.NET.      3600000      AAAA  2001:7fd::1
+      ; 
+      ; OPERATED BY ICANN
+      ;
+      .                        3600000      NS    L.ROOT-SERVERS.NET.
+      L.ROOT-SERVERS.NET.      3600000      A     199.7.83.42
+      L.ROOT-SERVERS.NET.      3600000      AAAA  2001:500:9f::42
+      ; 
+      ; OPERATED BY WIDE
+      ;
+      .                        3600000      NS    M.ROOT-SERVERS.NET.
+      M.ROOT-SERVERS.NET.      3600000      A     202.12.27.33
+      M.ROOT-SERVERS.NET.      3600000      AAAA  2001:dc3::35
+      ; End of file          
+
+bindconfig:
+  named.conf: |
+    options {
+            directory "/var/cache/bind";
+            listen-on port 53 { any; };
+            auth-nxdomain yes;
+            dnssec-validation auto;
+            recursion yes;
+            allow-query {
+                    any;
+            };
+            allow-query-cache {
+                    any;
+            };        
+            forwarders {
+                    1.1.1.1;
+                    1.0.0.1;
+                    8.8.8.8;
+                    8.8.4.4;
+            };
+            listen-on-v6 { ::1; };
+            allow-recursion {
+                    internal;
+            };
+            allow-transfer {
+                    { 100.64.1.2; 100.64.1.5; };
+            };
+            allow-update {
+                    none;
+            };
+    };
+
+    acl internal {
+            2001:470:c0e9::/48;
+            192.168.0.0/16;
+            172.16.0.0/12;
+            10.0.0.0/8;
+    };
+
+    view  "internal-view" {
+    match-clients { internal; };
+            zone "." IN {
+                    type hint;
+                    file "/var/lib/bind/named.ca";
+            };
+            zone "cheetahfox.com" {
+                    type master;
+                    file "/var/lib/bind/db.cheetahfox-internal";
+                    also-notify { 100.64.1.2; 100.64.1.5; };
+                    //allow-transfer {192.168.77.100;};
+                    // allow-transfer { key cheetahfox.com. ; } ;
+            };
+    };
+
+    view "external" {
+    match-clients { !internal; any; };
+            recursion no;
+            zone "cheetahfox.com" {
+                    type master;
+                    file "/var/lib/bind/db.cheetahfox-internal";
+            };    
+    };
+    
+    key "cheetahfox.com." {
+        algorithm hmac-md5;
+        secret "DC4k+qYvedNLDJYk/A1L8g==";
+    };
+
+    statistics-channels {
+        inet 10.1.10.10 port 8080 allow { 192.168.76.0/22; };
+        inet 127.0.0.1 port 8080 allow { 127.0.0.1; };
+    };
+
+
+zoneconfigs:
+  items:                 
+  - key: db.cheetahfox-internal 
+    path: db.cheetahfox-internal
+  - key: named.ca
+    path: named.ca
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+ingress: {}
