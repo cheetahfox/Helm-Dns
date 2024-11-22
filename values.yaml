@@ -333,7 +333,7 @@ bindconfig:
     
     key "cheetahfox.com." {
         algorithm hmac-md5;
-        secret "DC4k+qYvedNLDJYk/A1L8g==";
+        secret "secret==";
     };
 
     statistics-channels {

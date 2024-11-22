@@ -1,0 +1,120 @@
+$ORIGIN .
+$TTL 86400      ; 1 day
+cheetahfox.com          IN SOA  ns1.cheetahfox.com. root.cheetahfox.com. (
+                                2024092405 ; serial
+                                3000       ; refresh (50 minutes)
+                                7200       ; retry (2 hours)
+                                1209600    ; expire (2 weeks)
+                                10400      ; minimum (2 hours 53 minutes 20 seconds)
+                                )
+                        NS      ns1.cheetahfox.com.
+                        NS      ns2.cheetahfox.com.
+                        A       198.58.105.218
+                        MX      10 mail.cheetahfox.com.
+                        AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+$ORIGIN cheetahfox.com.
+cheetahfox.com.        600 IN TXT "v=spf1 mx a:mail.cheetahfox.com ~all"
+_dmarc.cheetahfox.com. 600 IN TXT "v=DMARC1; p=reject; rua=mailto:admin@mail.cheetahfox.com; ruf=mailto:admin@mail.cheetahfox.com; adkim=s; aspf=s"
+_DMARC                 600 IN TXT "v=DMARC1; p=reject; rua=mailto:admin@mail.cheetahfox.com; ruf=mailto:admin@mail.cheetahfox.com; adkim=s; aspf=s"
+cheetahfox.com._report._dmarc.mail.cheetahfox.com. 600 IN TXT "v=DMARC1;"
+_25._tcp.mail.cheetahfox.com. 86400 IN TLSA 2 1 1 0b9fa5a59eed715c26c1020c711b4f6ec42d58b0015e14337a39dad301c5afc3
+_25._tcp.mail.cheetahfox.com. 86400 IN TLSA 2 1 1 762195c225586ee6c0237456e2107dc54f1efc21f61a792ebd515913cce68332
+_imap._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+_pop3._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+_submission._tcp.cheetahfox.com. 600 IN SRV 0 0 0 .
+_autodiscover._tcp.cheetahfox.com. 600 IN SRV 10 1 443 mail.cheetahfox.com.
+_submissions._tcp.cheetahfox.com. 600 IN SRV 10 1 465 mail.cheetahfox.com.
+_imaps._tcp.cheetahfox.com. 600 IN SRV 10 1 993 mail.cheetahfox.com.
+_pop3s._tcp.cheetahfox.com. 600 IN SRV 10 1 995 mail.cheetahfox.com.
+autoconfig.cheetahfox.com. 600 IN CNAME mail.cheetahfox.com.
+autodiscover.cheetahfox.com. 600 IN CNAME mail.cheetahfox.com.
+mouse                   A       192.168.77.1
+akui                    A       104.200.18.251
+atlas                   A       192.168.66.69
+argo                    A       192.168.30.5
+cheetah                 A       192.168.77.40
+electra                 A       192.168.66.71
+hue                     A       192.168.77.20
+MacBook-Pro-2           A       192.168.77.35
+warg                    A       192.168.77.41
+m6me-ipmi               A       192.168.77.49
+m6me                    A       192.168.77.50
+kitsune                 A       192.168.77.100
+win-7vm                 A       192.168.77.150
+nezoria                 A       192.168.79.11
+dashboard               A       192.168.30.4
+grafana                 A       192.168.30.0
+ipmi-api                A       192.168.30.14
+ipmi-atlas              A       192.168.75.20
+ipmi-taygeta            A       192.168.75.21
+ipmi-merope             A       192.168.75.22
+ipmi-electra            A       192.168.75.23
+influxd                 A       192.168.30.1
+influxdbv1              A       192.168.30.2
+ingress-demo            A       192.168.30.14
+hecate                  A       35.208.63.93
+homeassistant           A       192.168.77.163
+jellyfin                A       192.168.30.16
+kiri                    A       205.159.243.25
+loki                    A       192.168.30.17
+mail                    A       104.200.18.251
+mail                    AAAA    2600:3c00::f03c:95ff:fe5d:1f5c
+merope                  A       192.168.66.70
+mqtt                    A       192.168.30.9
+mizugomu                A       192.168.75.3
+netbox                  A       192.168.30.10
+ns1                     A       198.58.105.218
+ns1                     AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+ns2                     A       35.208.63.93
+obake                   A       198.58.105.218
+obake                   AAAA    2600:3c00::f03c:91ff:fe70:f7a1
+packetflow              A       198.58.105.218
+pbx                     A       192.168.79.11
+pi-rtr                  A       192.168.77.131
+pleiades-api            A       192.168.66.100
+pleiades-grafana        A       192.168.67.100
+pleiades-loki           A       192.168.67.110
+prometheus              A       192.168.30.11
+pop                     A       198.58.105.218
+redmine                 A       192.168.30.8
+s3                      A       192.168.77.50
+s3-pleiades             A       192.168.66.70
+s3-pleiades             A       192.168.66.71
+s3-pleiades             A       192.168.66.72
+speedtest               A       192.168.30.14
+ruler.s3                A       192.168.77.50
+chunks.s3               A       192.168.77.50
+software-dev            A       192.168.79.13
+stock-ms                A       192.168.30.14
+taygeta                 A       192.168.66.72
+thanos-query-frontend   A       192.168.67.106
+thanos-receive          A       192.168.67.107
+vps                     A       198.58.105.218
+www                     A       198.58.105.218
+notflix                 A       173.174.137.32
+wp-test                 A       192.168.79.15
+fap                     A       192.168.21.22
+map                     A       192.168.21.23
+gap                     A       192.168.21.25
+kubeworker-1            A       192.168.79.38
+kubeworker-2            A       192.168.79.30
+kubeworker-3            A       192.168.79.21
+kube-master-1           A       192.168.79.25
+kube-master-2           A       192.168.79.42
+kube-master-3           A       192.168.79.19
+k8s-install             A       192.168.79.18
+m6me-openstack-vip      A       192.168.77.50
+www.m6me                CNAME   m6me-openstack-vip
+keystone.m6me           CNAME   m6me-openstack-vip
+glance.m6me             CNAME   m6me-openstack-vip
+neutron.m6me            CNAME   m6me-openstack-vip
+nova.m6me               CNAME   m6me-openstack-vip
+metadata.m6me           CNAME   m6me-openstack-vip
+cinder.m6me             CNAME   m6me-openstack-vip
+heat.m6me               CNAME   m6me-openstack-vip
+octavia.m6me            CNAME   m6me-openstack-vip
+barbican.m6me           CNAME   m6me-openstack-vip
+nova-novncproxy.m6me    CNAME   m6me-openstack-vip
+ceilometer.m6me         CNAME   m6me-openstack-vip
+grafana.m6me            CNAME   m6me-openstack-vip
+nagios.m6me             CNAME   m6me-openstack-vip
